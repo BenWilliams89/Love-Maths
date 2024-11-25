@@ -1,4 +1,3 @@
-
 // Two types of event listeners - When page finishes loading & code when executed on button click
 
 // Wait for the DOM to finish loading before running the game
@@ -11,10 +10,10 @@ document.addEventListener("DOMContentLoaded", function() {
     for (let button of buttons) {
         button.addEventListener('click', function() {
             if (this.getAttribute('data-type') === 'submit') {
-                alert('You clicked Submit!')
+                checkAnswer();
             } else {
                 let gameType = this.getAttribute('data-type');
-                runGame(gameType)
+                runGame(gameType);
             }
         })
     }
@@ -31,14 +30,14 @@ document.addEventListener("DOMContentLoaded", function() {
 // function for run game
 function runGame(gameType) {
  // creates two random numbers between 1 & 25 - the +1 removes 0 as a possible number
-let num1 = Math.floor(Math.random() * 25) + 1
-let num2 = Math.floor(Math.random() * 25) + 1
+let num1 = Math.floor(Math.random() * 25) + 1;
+let num2 = Math.floor(Math.random() * 25) + 1;
 
 if (gameType === 'addition') {
-    displayAdditionQuestion(num1, num2)
+    displayAdditionQuestion(num1, num2);
 } else {
     alert(`Unknown game type: ${gameType}`);
-    throw `Unknow game Type: ${gameType}. Aborting!`
+    throw `Unknow game Type: ${gameType}. Aborting!`;
 }
 
 }
@@ -46,8 +45,25 @@ if (gameType === 'addition') {
 
 
 // function for check answers
+/**
+ * Checks the answer against the first element (userguess)
+ * in the returned calculatedCorrectAnswer arrray
+ */
 
 function checkAnswer() {
+
+let userAnswer =  parseInt(document.getElementById('answer-box').value);
+let calculatedAnswer = calculateCorrectAnswer();
+let isCorrect = userAnswer === calculatedAnswer[0]
+
+if (isCorrect) {
+    alert( 'Hey you got it right :D')
+} else {
+    alert(`Awww..your answer is incorrect, you guessed ${userAnswer}. The correct answer is ${calculatedAnswer[0]} !`);
+}
+
+runGame(calculatedAnswer[1]);
+
 
 }
 
